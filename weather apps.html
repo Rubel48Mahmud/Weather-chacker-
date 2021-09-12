@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Weather apps</title>
+<style type="text/css">
+*{margin:0;
+padding:0;
+box-sizing:border-box}
+body{
+background:#000
+
+}
+
+.main{
+width:80%;
+text-align:center;
+margin:30px 0px;
+background:#356eae;
+padding:10px;
+margin:50px auto;
+border-radius:8px;
+box-shadow:2px 2px 2px #fff
+}
+
+input[type="text"]{
+height:30px;
+padding:4px;
+outline:none;
+border:2px solid #81d4a5;
+cursor:pointer;
+border-radius:3px;
+font-weight:bold;
+transition:.2s
+}
+input[type="text"]:hover{
+
+border:none;
+box-shadow:1px 1px 2px pink,-1px -1px 2px pink;
+
+}
+
+
+
+
+input[type="button"]{
+height:26px;
+width:70px;
+border:2px solid blue;
+cursor:pointer;
+border-radius:3px;
+background:green;
+color:#fff;
+font-weight:bold;
+font-size:16px;
+margin-top:5px
+
+}
+input[type="button"]:active{
+background:rgba(0,0,0,0.5);
+
+
+}
+
+h3{
+padding:5px;
+color:#fff;
+margin-top:20px
+
+
+}
+p{color:rgb(255,255,255);
+padding:5px;
+font-size:15px}
+
+
+button{
+height:26px;
+width:90px;
+border:2px solid #fff;
+cursor:pointer;
+border-radius:3px;
+background:red;
+color:#fff;
+font-weight:bold;
+font-size:17px;
+margin:15px 0px
+
+}
+
+button:active{
+background:rgba(0,0,0,0.5);
+}
+i{color:#fff;
+}
+a{text-decoration:none;
+cursor:pointer}
+h1{color:pink;
+padding:10px;
+text-align:center;
+text-shadow:1px 1px 2px blue}
+</style>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+</head>
+<body>
+<h1>Weather Check</h1>
+<div class="main">
+
+  <input type="text" id="inputCity" placeholder="Enter a City Name"><br>
+  <input type="button" id="submitBtn" value="Search">
+  <h3>City Name :- <span id="cityName"></span></h3>
+  <p>Temperature :- <span id="temp"></span></p>
+  <p>Weather :- <span id="des"></span></p>
+  <button id="clear">Clear All</button>
+
+
+</div>
+
+<i>Developed By <a href="https://www.facebook.com/Rubel48Mahmud" >Rubel Mahmud</a></i>
+<script type="text/javascript">
+var submitBtn = document.getElementById("submitBtn");
+var clear = document.getElementById("clear");
+var inputCity = document.getElementById("inputCity");
+var cityName = document.getElementById("cityName");
+var temp = document.getElementById("temp");
+var des = document.getElementById("des");
+
+
+submitBtn.addEventListener("click",function(){
+
+
+if(inputCity.value==""){
+
+swal("sorry",
+"Please Enter Your City Name", 
+"error")
+
+
+}
+
+else{
+fetch('https://api.openweathermap.org/data/2.5/weather?q='+inputCity.value+'&appid=d7d7d996ed98c6453217d6c08439849d')
+.then(respones => respones.json())
+.then(data => {
+
+var cityNames = data.name;
+var temperature = data.main.temp;
+var finalTemp = parseInt(temperature)-parseInt(274.15)+"°"+;
+var description = data.weather[0].description;
+
+cityName.innerHTML=cityNames;
+temp.innerHTML=finalTemp;
+des.innerHTML=description 
+
+})
+}
+
+
+})
+
+
+
+clear.addEventListener("click",function(){
+
+
+
+
+cityName.innerHTML="";
+temp.innerHTML="";
+des.innerHTML="";
+inputCity.value=""
+
+
+
+})
+</script>
+</body>
+</html>
